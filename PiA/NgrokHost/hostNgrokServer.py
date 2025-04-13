@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template_string, redirect
-from SendTextMessage import send_message, webreq
+from SendTextMessage import send_message, webreq, filesend
 
 app = Flask(__name__)
 
@@ -151,7 +151,7 @@ def browse():
 @app.route('/visit')
 def visit():
     try:
-        with open("/index.txt", "r") as f:
+        with open("Index.txt", "r") as f:
             webpage_content = f.read()
     except FileNotFoundError:
         webpage_content = "<p><i>index.txt not found.</i></p>"
@@ -188,9 +188,15 @@ def upload():
 def webreq_receiver():
     text = request.form.get('text', '[No website]')
     print("Website requested:", text)
-    # Optionally save or handle the text
-    files = {'file': open('/Host/index.txt', 'rb')}
-    upload_web_files(url, files)
+    
+    try:
+        files = {'file': open('/Host/index.txt', 'rb')}
+        url = load_url()
+        filesend(url, files)
+    except Exception as e:
+        print("File send error:", e)
+        return "Website request received, but file send failed"
+
     return "Website request received"
 
 

@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+        <style>
+            .thumbnail {
+    width: 100%;
+}
+
+.video-title {
+    margin-top: 0;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    margin-bottom: 10px;
+}
+
+.video-info-grid {
+     display: grid;
+     grid-template-columns: 50px 1fr;
+}
+
+.profile-picture {
+    width: 36px;
+    border-radius: 50px;
+}
+
+.video-info {
+    display: inline-block;
+    width: 200px;
+}
+
+.video-author {
+    margin-bottom: 4px;
+}
+
+.thumbnail-row {
+    margin-bottom: 8px;
+    position: relative;
+}
+
+.video-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 16px;
+    row-gap: 40px;
+}
+
+@media (max-width: 750px) {
+    .video-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (min-width: 751px) and (max-width: 999px) {
+    .video-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+@media (min-width: 1000px) {
+    .video-grid {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+}
+
+.video-time {
+    font-size: 12px;
+    font-weight: 500;
+    position: absolute;
+    padding: 4px;
+    border-radius: 2px;
+    background-color: black;
+    color: white;
+    right: 5px;
+    bottom: 8px;
+}
+
+.video-author, .video-stats {
+    font-size: 12px;
+    color: rgb(96, 96, 96);
+}
+
+.sidebar {
+    background-color: white;
+    position: fixed;
+    left: 0;
+    top: 55px;
+    bottom: 0;
+    width: 72px;
+    z-index: 200;
+    padding-top: 5px;
+
+}
+
+.sidebar-link {
+    height: 76px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.sidebar-link:hover {
+    background-color: rgb(235,235,235);
+}
+
+.sidebar-link img {
+    height: 24px;
+    margin-bottom: 4px;
+}
+
+.sidebar-link div {
+    font-size: 10px;
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+body {
+    font-family: Roboto, Arial;
+    margin: 0;
+    padding-top: 80px;
+    padding-left: 96px;
+    padding-right: 24px;
+    background-color: rgb(248,248,248);
+}
+
+.header {
+    height: 55px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background-color: white;
+    border: 1px solid rgb(228,228,228);
+}
+
+.left-section {
+    width: 150px;
+    display: flex;
+    align-items: center;
+}
+
+.hamburger-menu {
+    height: 24px;
+    margin-left: 24px;
+    margin-right: 24px;
+}
+
+.youtube-logo {
+    height: 20px;
+    width: 500px;
+}
+
+.middle-section {
+    flex: 1;
+    margin-left: 70px;
+    margin-right: 35px;
+    max-width: 500px;
+    display: flex;
+    align-items: center;
+}
+
+.search-bar {
+    flex: 1;
+    height: 36px;
+    padding-left: 10px;
+    font-size: 16px;
+    border: 1px solid rgb(192,192,192);
+    border-radius: 2px;
+    box-shadow: inset 1px 2px 3px rgba(0, 0, 0, 0.05);
+    width: 0;
+}
+
+.search-bar::placeholder {
+    font-size: 16px;
+}
+
+.search-btn {
+    height: 40px;
+    width: 66px;
+    background-color: rgb(240,240,240);
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(192, 192, 192);
+    margin-left: -1px;
+    margin-right: 10px;
+}
+
+.search-btn,
+.voice-search-btn,
+.upload-icon-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+.search-btn .tooltip,
+.voice-search-btn .tooltip,
+.upload-icon-container .tooltip {
+    position: absolute;
+    background-color: gray;
+    color: white;
+    padding: 4px 8px 4px 8px;
+    border-radius: 2px;
+    font-size: 12px;
+    bottom: -30px;
+    opacity: 0;
+    transition: opacity 0.15s;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+.search-btn:hover .tooltip,
+.voice-search-btn:hover .tooltip,
+.upload-icon-container:hover .tooltip {
+    opacity: 1;
+}
+
+.search-icon {
+    height: 25px;
+}
+
+.voice-search-btn {
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
+    border: none;
+    background-color: rgb(245, 245, 245);
+}
+
+.voice-search-icon {
+    height: 24px;
+    margin-top: 4px;
+}
+
+.right-section {
+    width: 180px;
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+}
+
+.upload-icon, 
+.youtube-apps-icon, 
+.notifications-icon {
+    height: 24px;
+}
+
+.notifications-icon-container {
+    position: relative;
+}
+
+.notifications-count {
+    position: absolute;
+    top: -2px;
+    right: -5px;
+    background-color: rgb(200,0,0);
+    color: white;
+    font-size: 11px;
+    padding: 2px 5px 2px 5px;
+    border-radius: 10px;
+    
+}
+
+.user-picture {
+    height: 32px;
+    border-radius: 16px;
+}
+
+        </style>
+        <title>Pintube</title>
+    </head>
+    <body>
+        <header class="header">
+            <div class="left-section">
+                <img class="hamburger-menu" src="images/hamburger-menu.svg">
+                <img class="youtube-logo" src="images/pintube.png">
+            </div>
+
+        </header>
+
+
+
+        <main>
+            <section class="video-grid">
+                <form method="POST">
+                    <input type="hidden" name="video_id" value="tpiyEe_CqB4">
+                    <button type="submit">
+                <div class="video-preview">
+                    <div class="thumbnail-row">
+                        <img class="thumbnail" src="https://i.ytimg.com/vi/tWFIIuZNqg4/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLABgkLWoABqR4l-4mU9mJhLWNrBug">
+                        <div class="video-time">14:20</div>
+                    </div>
+
+                    <div class="video-info-grid">
+                        <div class="profile">
+                            <img class="profile-picture" src="./images/IVE.jpg">
+                        </div>
+        
+                        <div class="video-info">
+                            <p class="video-title">Dog looking at oven</p>
+                            <p class="video-author">IVE</p>
+                            <p class="video-stats">272K views &#183 1 month ago</p>
+                        </div>
+                    </div>
+                </div>
+                </button>
+            </form>
+        
+                <form method="POST">
+                    <input type="hidden" name="video_id" value="tpiyEe_CqB4">
+                    <button type="submit">
+                <div class="video-preview">
+                    <div class="thumbnail-row">
+                        <img class="thumbnail" src="https://i.ytimg.com/vi/8iY66B5NB2w/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLCszNq5K0-lNUotpC-2s05aAev1JA">
+                        <div class="video-time">14:20</div>
+                    </div>
+        
+                    <div class="video-info-grid">
+                        <div class="profile">
+                            <img class="profile-picture" src="./images/IVE.jpg">
+                        </div>
+        
+                        <div class="video-info">
+                            <p class="video-title">CATS: Crazy Antics and Unstoppable Chaos</p>
+                            <p class="video-author">IVE</p>
+                            <p class="video-stats">272K views &#183 1 month ago</p>
+                        </div>
+                    </div>
+                </div>
+                </button>
+                </form>
+        
+                <form method="POST">
+                    <input type="hidden" name="video_id" value="tpiyEe_CqB4">
+                    <button type="submit">
+                <div class="video-preview">
+                    <div class="thumbnail-row">
+                        <img class="thumbnail" src="./images/yujin.jpg">
+                        <div class="video-time">14:20</div>
+                    </div>
+        
+                    <div class="video-info-grid">
+                        <div class="profile">
+                            <img class="profile-picture" src="./images/IVE.jpg">
+                        </div>
+        
+                        <div class="video-info">
+                            <p class="video-title">Ending Credit Covered by ANYUJIN</p>
+                            <p class="video-author">IVE</p>
+                            <p class="video-stats">272K views &#183 1 month ago</p>
+                        </div>
+                    </div>
+                </div>
+                </button>
+                </form>
+        
+                <form method="POST">
+                    <input type="hidden" name="video_id" value="tpiyEe_CqB4">
+                    <button type="submit">
+                <div class="video-preview">
+                    <div class="thumbnail-row">
+                        <img class="thumbnail" src="https://i.ytimg.com/vi/z1qNWhzA0HA/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLDIBCAa-NFa7whe_1-x3XVJjhC2Fw">
+                        <div class="video-time">14:20</div>
+                    </div>
+
+                    <div class="video-info-grid">
+                        <div class="profile">
+                            <img class="profile-picture" src="./images/IVE.jpg">
+                        </div>
+        
+                        <div class="video-info">
+                            <p class="video-title">50 Superhuman Plays that Stopped the Internet</p>
+                            <p class="video-author">IVE</p>
+                            <p class="video-stats">272K views &#183 1 month ago</p>
+                        </div>
+                    </div>
+                </div>
+                </button>
+                </form>
+        
+                <form method="POST">
+                    <input type="hidden" name="video_id" value="tpiyEe_CqB4">
+                    <button type="submit">
+                <div class="video-preview">
+                    <div class="thumbnail-row">
+                        <img class="thumbnail" src="https://i.ytimg.com/vi/HuFYqnbVbzY/hq720.jpg?v=67324c8b&sqp=CIyf8L8G-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLC0yG-jL2jT70H3j5vOkMjvEyr90g">
+                        <div class="video-time">14:20</div>
+                    </div>
+        
+                    <div class="video-info-grid">
+                        <div class="profile">
+                            <img class="profile-picture" src="./images/IVE.jpg">
+                        </div>
+        
+                        <div class="video-info">
+                            <p class="video-title">jazz lofi radio 🎷 beats to chill/study to</p>
+                            <p class="video-author">IVE</p>
+                            <p class="video-stats">272K views &#183 1 month ago</p>
+                        </div>
+                    </div>
+                </div>
+            </button>
+            </form>
+                
+                <form method="POST">
+                <input type="hidden" name="video_id" value="tpiyEe_CqB4">
+                <button type="submit">
+                <div class="video-preview">
+                    <div class="thumbnail-row">
+                        <img class="thumbnail" src="https://i.ytimg.com/vi/tpiyEe_CqB4/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLDadZEOLyO4d9-HYPZ8RUb9BVd6hw">
+                        <div class="video-time">14:20</div>
+                    </div>
+        
+                    <div class="video-info-grid">
+                        <div class="profile">
+                            <img class="profile-picture" src="./images/IVE.jpg">
+                        </div>
+        
+                        <div class="video-info">
+                            <p class="video-title">Cute and Funny Cat Videos to Keep You Smiling!</p>
+                            <p class="video-author">IVE</p>
+                            <p class="video-stats">272K views &#183 1 month ago</p>
+                        </div>
+                    </div>
+                </div>
+                </button>
+                </form>
+
+                <form method="POST">
+                    <input type="hidden" name="video_id" value="tpiyEe_CqB2">
+                    <button type="submit">
+                <div class="video-preview">
+                    <div class="thumbnail-row">
+                        <img class="thumbnail" src="https://i.ytimg.com/vi/Uwmp16aSgdk/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLA24f9WMggZfez7-v6QfQpuCHdyxw">
+                        <div class="video-time">14:20</div>
+                    </div>
+        
+                    <div class="video-info-grid">
+                        <div class="profile">
+                            <img class="profile-picture" src="./images/IVE.jpg">
+                        </div>
+        
+                        <div class="video-info">
+                            <p class="video-title">M4 Macbook Air Review</p>
+                            <p class="video-author">IVE</p>
+                            <p class="video-stats">272K views &#183 1 month ago</p>
+                        </div>
+                    </div>
+                </div>
+                </button>
+                </form>
+
+                <form method="POST">
+                    <input type="hidden" name="video_id" value="tpiyEe_CqB4">
+                    <button type="submit">
+                <div class="video-preview">
+                    <div class="thumbnail-row">
+                        <img class="thumbnail" src="https://i.ytimg.com/vi/d6iC8X3WofI/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLABiS5TWdzkJZ_uiBsLw-cZUk_gBg">
+                        <div class="video-time">14:20</div>
+                    </div>
+        
+                    <div class="video-info-grid">
+                        <div class="profile">
+                            <img class="profile-picture" src="./images/IVE.jpg">
+                        </div>
+        
+                        <div class="video-info">
+                            <p class="video-title">What it's like to die on every planet</p>
+                            <p class="video-author">IVE</p>
+                            <p class="video-stats">272K views &#183 1 month ago</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </button>
+        </form>
+<!--test-->
+            </section>
+        </main>
+    </body>
+</html>
